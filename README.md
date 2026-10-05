@@ -2,6 +2,21 @@
 
 [![tests](https://github.com/Aegink/ai-workflow/actions/workflows/tests.yml/badge.svg)](https://github.com/Aegink/ai-workflow/actions/workflows/tests.yml)
 
+> ### 📖 来源与致谢
+>
+> 本仓库的**六阶段工作流框架**（Brainstorm / Design / Plan / Execute / Verify / Ship），
+> 以及「**Skill / Artifact / Gate**」三件约束、垂直切片、双轴 Review、Handoff 引用而非复制等做法，
+> 均来自 **czm**（[@czm15053](https://github.com/czm15053)）的深度长文：
+>
+> ### 👉 [《从 AI 写代码到 AI 工作流 · 一次需求的两条命，和救回它的六个阶段》](https://czm15053.github.io/ai-workflow-six-stages/)
+> <sub>https://czm15053.github.io/ai-workflow-six-stages/</sub>
+>
+> **先读原文**——它用一个真实需求把六个阶段讲透了，是方法论本身。
+> 本仓库是那套方法论的**工程实现**：把它落成可部署、可强制的文件与钩子，**不是原文转载**，也不是原创方法论。
+> 如果你觉得这套思路有价值，功劳属于原作者；这个仓库只是「让它在任何 AI 上真的跑起来」的那一层。
+
+---
+
 **让任何 AI（编码 Agent / 聊天模型）在你切换项目、开启新会话时，自动按同一套工程纪律工作。**
 
 解决两个具体问题：
@@ -139,16 +154,47 @@ sh tests/hooks.test.sh
 
 ---
 
-## 设计来源
+## 设计来源与致谢
 
-六阶段框架与「Artifact / Gate / Skill」三件约束的组织方式，参考了 czm 的长文
-《[从 AI 写代码到 AI 工作流 · 一次需求的两条命，和救回它的六个阶段](https://czm15053.github.io/ai-workflow-six-stages/)》，
-以及文中提到的 Matt Pocock stage skills、OpenSpec、Superpowers、Trellis、GSD、BMAD、OMC 等开源实践。
+**本仓库不是原创方法论，是一套实现。**
 
-本仓库是**工具实现**：把那些纪律落成可部署、可强制的文件与钩子；不是那篇文章的转载。
+六阶段框架（Brainstorm / Design / Plan / Execute / Verify / Ship）与「Skill / Artifact / Gate」三件约束的组织方式，
+来自 **czm**（GitHub [@czm15053](https://github.com/czm15053)）的深度长文：
+
+> **[《从 AI 写代码到 AI 工作流 · 一次需求的两条命，和救回它的六个阶段》](https://czm15053.github.io/ai-workflow-six-stages/)**
+> <sub>https://czm15053.github.io/ai-workflow-six-stages/</sub>
+
+原文以某直播平台「贵族体系升级」为原型，用一个真实需求完整走完六个阶段，讲清了每站**为什么会翻车**、
+以及用什么方法救回来——**方法论在原文，强烈建议先读**。
+
+文中还系统比较了六套开源工作流与一组 stage skill，本仓库的「最小 Skill」与「强制力分级」思路也受其启发：
+
+| 项目 | 定位 | 仓库 |
+|---|---|---|
+| **Matt Pocock Skills** | 小而可组合的 stage skill | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| **OpenSpec** | spec-first：变更先写成可审查的合同 | [Fission-AI/OpenSpec](https://github.com/Fission-AI/OpenSpec) |
+| **Superpowers** | skill-first：给 Agent 立工程纪律 | [obra/superpowers](https://github.com/obra/superpowers) |
+| **Trellis** | structure-first：任务与项目记忆存进仓库 | [mindfold-ai/Trellis](https://github.com/mindfold-ai/Trellis) |
+| **Get Shit Done** | phase-first：长任务分段、防上下文腐烂 | [gsd-build/get-shit-done](https://github.com/gsd-build/get-shit-done) |
+| **BMAD** | agile-first：角色化敏捷团队 | [bmad-code-org/BMAD-METHOD](https://github.com/bmad-code-org/BMAD-METHOD) |
+| **OMC** | orchestration-first：多 Agent 编排与运行时治理 | [Yeachan-Heo/oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode) |
+
+<sub>以上各项目链接来自原文的「六套工作流」对照表；阶段强弱映射属原文为讲解所做，非各项目官方评级。</sub>
+
+### 本仓库做了什么
+
+**只做一件事：把方法论变成「任何 AI 都无法绕过」的机制。**
+
+原文解决了「该怎么做」，本仓库解决「怎么让不听话的模型真的照做」：
+
+- `AGENTS.md` —— 把六阶段、Gate、落盘规则写成项目无关的可部署契约
+- `hooks/` —— 把 Gate 从「建议」变成「工具调用会被真实拒绝」的硬闸
+- `install.sh` —— 一条命令铺进任意项目，多工具约定路径软链到同一份真身
+- `tests/` —— 21 项断言保证钩子行为可回归
+
 设计取舍见 [`docs/design-notes.md`](docs/design-notes.md)。
 
-核心命题一句话：**Agent = Model + Harness**。模型提供智能，能不能可靠用起来，取决于模型之外那层工程环境。
+核心命题一句话：**Agent = Model + Harness**。模型提供智能，能不能被可靠地用起来，取决于模型之外那层工程环境。
 
 ---
 

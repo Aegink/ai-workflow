@@ -115,6 +115,9 @@ description: 通用六阶段 AI 工作流（Brainstorm/Design/Plan/Execute/Verif
 钩子说明：\`$SRC/docs/hooks.md\`
 
 核心：拿到任务先定级 L0–L3；每阶段有硬门禁（Gate）；结论必须落盘到项目里的 \`.aiworkflow/\`，不依赖记忆。
+
+方法来源：czm《从 AI 写代码到 AI 工作流 · 一次需求的两条命，和救回它的六个阶段》
+https://czm15053.github.io/ai-workflow-six-stages/
 EOF
   echo "  ✓ Minis 技能: $D/SKILL.md"
 fi
