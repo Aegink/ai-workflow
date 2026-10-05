@@ -1,5 +1,7 @@
 # AI Workflow — 通用六阶段 AI 工作流契约
 
+[![tests](https://github.com/Aegink/ai-workflow/actions/workflows/tests.yml/badge.svg)](https://github.com/Aegink/ai-workflow/actions/workflows/tests.yml)
+
 **让任何 AI（编码 Agent / 聊天模型）在你切换项目、开启新会话时，自动按同一套工程纪律工作。**
 
 解决两个具体问题：

@@ -1,0 +1,36 @@
+name: tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  hooks-test:
+    name: 钩子行为测试
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 脚本语法检查
+        run: |
+          set -e
+          for f in install.sh uninstall.sh hooks/session-start.sh hooks/pre-tool-use.sh hooks/stop.sh tests/hooks.test.sh; do
+            sh -n "$f"
+            echo "语法 OK  $f"
+          done
+
+      - name: 校验模板 JSON
+        run: |
+          python3 - <<'PY'
+          import json
+          d = json.load(open('hooks/settings.template.json'))
+          assert 'hooks' in d, 'settings 模板缺少 hooks 段'
+          for ev in ('SessionStart', 'PreToolUse', 'Stop'):
+              assert ev in d['hooks'], f'缺少 {ev} 钩子'
+          print('settings.template.json 合法，三个钩子事件齐全')
+          PY
+
+      - name: 运行钩子测试
+        run: sh tests/hooks.test.sh
